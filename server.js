@@ -1,5 +1,14 @@
 const express = require('express');
 const app = express();
+const validate = require('./validate');
+const registerUserSchema = require('./schemas/registerUserSchema');
+
+const PORT = 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 
 app.use(express.json());
 
@@ -27,3 +36,8 @@ app.patch('/products/:id', (req, res) => {
     });
 });
 
+app.post('/api/users', validate(registerUserSchema), (req, res) => {
+  // If we reach here, the data is guaranteed to match the schema
+  createUser(req.body);
+  res.status(201).send();
+});
