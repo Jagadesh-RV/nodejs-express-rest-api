@@ -22,3 +22,7 @@ class UserRepository {
         };
     }
 }
+app.get('/users/:id', async (req, res) => {
+    const user = await userService.getUser(req.params.id); // Route knows nothing of Prisma
+    res.json(user);
+});
